@@ -216,6 +216,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void test5(View view){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://10.0.1.1/brad01.php?cname=tony&tel=0919123456&birthday=2000-02-09");
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    conn.connect();
+                    conn.getInputStream();
+
+                }catch (Exception e){
+                    Log.i("brad", e.toString());
+                }
+            }
+        }.start();
+    }
+
+/*
+ * 新增/登入帳號密碼
+ * url: http://www.brad.tw/cloudfitness/login.php?account=xxx&passwd=xxx
+ * return: {"result":"結果值"}
+ * return: {"result":"0", id:"123", "gender":"m/f", "age":"20", "height":"170"}
+ * 結果值:
+ *       0 : 帳密驗證符合, 傳回 id 值
+ *       1 : 帳號不存在, 已新增該組帳密, 傳回新的 id 值
+ *      -1 : http request error
+ *      -2 : mysql connect error
+ *      -3 : 帳號已存在, 而密碼驗證錯誤
+ */
+
+
+
+
+
+
     private class UIHander extends Handler {
         @Override
         public void handleMessage(Message msg) {

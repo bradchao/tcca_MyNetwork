@@ -31,6 +31,12 @@
         android:onClick="test4"
         android:text="Test 4"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="test5"
+        android:text="Test 5"
+        />
     <ImageView
         android:id="@+id/img"
         android:layout_width="wrap_content"
