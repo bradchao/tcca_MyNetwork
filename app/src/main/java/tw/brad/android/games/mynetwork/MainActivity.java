@@ -1,6 +1,7 @@
 package tw.brad.android.games.mynetwork;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private UIHander hander;
     private boolean isPermissionOK;
     private File sdroot, savePDF;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void go(){
         sdroot = Environment.getExternalStorageDirectory();
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setTitle("Downloading...");
+
 
     }
 
@@ -127,10 +135,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void test3(View view){
+        progressDialog.show();
         new Thread(){
             @Override
             public void run() {
-                getWebPDF("http://www.gamer.com.tw");
+                getWebPDF("http://pdfmyurl.com/?url=http://www.gamer.com.tw");
 
             }
         }.start();
@@ -153,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
             fout.flush();
             fout.close();
-
+            hander.sendEmptyMessage(1);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -166,7 +175,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            img.setImageBitmap(bmp);
+            switch(msg.what){
+                case 0: img.setImageBitmap(bmp); break;
+                case 1:
+                    progressDialog.dismiss();
+                    break;
+            }
+
         }
     }
 
