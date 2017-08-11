@@ -170,6 +170,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void test4(View view){
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getJSONString("http://opendata2.epa.gov.tw/AQX.json");
+            }
+        }.start();
+    }
+
+    private void getJSONString(String urlString){
+        try{
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.connect();
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String jsonString = br.readLine();
+            Log.i("brad", jsonString);
+            //parseJSONString(jsonString);
+
+        }catch(Exception e){
+            Log.i("brad", e.toString());
+        }
+    }
+
+    private void parseJSONString(String json){
+
+    }
 
     private class UIHander extends Handler {
         @Override
