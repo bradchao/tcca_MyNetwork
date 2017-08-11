@@ -18,6 +18,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -188,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String jsonString = br.readLine();
             Log.i("brad", jsonString);
-            //parseJSONString(jsonString);
+            parseJSONString(jsonString);
 
         }catch(Exception e){
             Log.i("brad", e.toString());
@@ -196,7 +200,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void parseJSONString(String json){
+        try {
+            JSONArray root = new JSONArray(json);
+            for (int i=0; i<root.length(); i++){
+                JSONObject row = root.getJSONObject(i);
+                String country = row.getString("County");
+                String sitename = row.getString("SiteName");
+                String pm25 = row.getString("PM2.5");
+                Log.i("brad", country + ":" + sitename + ":" + pm25);
+            }
 
+
+        } catch (JSONException e) {
+            Log.i("brad", e.toString());
+        }
     }
 
     private class UIHander extends Handler {
