@@ -257,6 +257,31 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
     }
+    public void test7(View view){
+        savePDF = new File(sdroot, "myweb.pdf");
+        if (savePDF.exists()) {
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        MultipartUtility mu = new MultipartUtility(
+                                "http://10.0.1.1/brad04.php", "UTF-8");
+                        mu.addFilePart("upload", savePDF);
+                        List<String> ret = mu.finish();
+                        for (String line : ret) {
+                            Log.i("brad", line);
+                        }
+
+                    } catch (IOException e) {
+                        Log.i("brad", e.toString());
+                    }
+
+                }
+            }.start();
+        }else{
+            Log.i("brad", "Upload File not exist");
+        }
+    }
 
     private class UIHander extends Handler {
         @Override
