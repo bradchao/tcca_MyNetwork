@@ -37,6 +37,12 @@
         android:onClick="test5"
         android:text="Test 5"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="test6"
+        android:text="Test 6"
+        />
     <EditText
         android:id="@+id/account"
         android:layout_width="match_parent"

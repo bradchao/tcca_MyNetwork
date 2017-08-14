@@ -25,11 +25,13 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView img;
@@ -233,23 +235,28 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-/*
- * 新增/登入帳號密碼
- * url: http://www.brad.tw/cloudfitness/login.php?account=xxx&passwd=xxx
- * return: {"result":"結果值"}
- * return: {"result":"0", id:"123", "gender":"m/f", "age":"20", "height":"170"}
- * 結果值:
- *       0 : 帳密驗證符合, 傳回 id 值
- *       1 : 帳號不存在, 已新增該組帳密, 傳回新的 id 值
- *      -1 : http request error
- *      -2 : mysql connect error
- *      -3 : 帳號已存在, 而密碼驗證錯誤
- */
+    public void test6(View view){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    MultipartUtility mu = new MultipartUtility(
+                            "http://10.0.1.1/brad02.php", "UTF-8");
+                    mu.addFormField("data1", "1111");
+                    mu.addFormField("data2", "2222");
+                    List<String> ret = mu.finish();
 
+                    for (String line : ret){
+                        Log.i("brad", line);
+                    }
 
+                } catch (IOException e) {
+                    Log.i("brad", e.toString());
+                }
 
-
-
+            }
+        }.start();
+    }
 
     private class UIHander extends Handler {
         @Override
